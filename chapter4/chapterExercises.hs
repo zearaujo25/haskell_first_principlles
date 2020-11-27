@@ -21,3 +21,8 @@ x = (+)
 func :: [a] -> Int 
 func xs = w `x` 1
    where w = length xs 
+
+x_id x = x
+
+f_tuple :: (a,a) -> a
+f_tuple (a,b) = a
