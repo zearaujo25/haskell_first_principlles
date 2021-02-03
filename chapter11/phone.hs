@@ -64,11 +64,20 @@ fingerTaps :: [(Digit, Presses)] -> Presses
 fingerTaps convoTaps = foldr (\(_,buttonTaps) -> \totalTaps -> totalTaps+buttonTaps) 0 convoTaps
 
 mostPopularLetter :: String -> Char
-mostPopularLetter message =   undefined
+mostPopularLetter  =  fst. letterCount
+
+letterCount :: String -> (Char,Int)
+letterCount = (maximumBy (\t1 -> \t2 -> compare (snd t1) (snd t2))).(map (\letterGroup -> ((head letterGroup),(length letterGroup)))).group.sort.(filter isAlpha).(map toLower)
 
 
+coolestLtr :: [String] -> Char
+coolestLtr = mostPopularLetter.concat
 
+-- coolestWord :: [String] -> String
+coolestWord = fst.(maximumBy (\t1 -> \t2 -> compare (snd t1) (snd t2))).(map (\letterGroup -> ((head letterGroup),(length letterGroup)))).group.sort.(map lowerWord).concat.(map words)
 
+lowerWord :: String -> String
+lowerWord = map toLower
 
 convo :: [String]
 convo = [   "Wanna play 20 questions",
