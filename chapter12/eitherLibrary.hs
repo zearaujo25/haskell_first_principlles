@@ -5,7 +5,6 @@ leftChecker :: Either a b -> [a] -> [a]
 leftChecker (Right _) xs = xs
 leftChecker (Left x) xs = x:xs 
 
-
 rights' :: [Either a b] -> [b]
 rights' = foldr rightChecker []
 
