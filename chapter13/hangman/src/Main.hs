@@ -12,11 +12,11 @@ newtype WordList =
   WordList [String]
   deriving (Eq, Show)
 
-data Puzzle = Puzzle String [Maybe Char] [Char]
+data Puzzle = Puzzle String [Maybe Char] [Char] [Char]
 
 instance Show Puzzle where
-  show (Puzzle _ discovered guessed) =
-      (intersperse ' ' $  fmap renderPuzzleChar discovered) ++ " Guessed so far: " ++ guessed
+  show (Puzzle _ discovered guessed errors) =
+      (intersperse ' ' $  fmap renderPuzzleChar discovered) ++ " Guessed so far: " ++ guessed ++ " Errors: " ++ errors
 
 minWordLength :: Int
 minWordLength = 5
@@ -50,13 +50,13 @@ randomWord' = gameWords >>= randomWord
 
 
 freshPuzzle :: String -> Puzzle
-freshPuzzle w = Puzzle w (map (const Nothing) w) [] 
+freshPuzzle w = Puzzle w (map (const Nothing) w) [] []
 
 charInWord :: Puzzle -> Char -> Bool
-charInWord (Puzzle w _ _) c = elem c w
+charInWord (Puzzle w _ _ _) c = elem c w
 
 alreadyGuessed :: Puzzle -> Char -> Bool
-alreadyGuessed (Puzzle _ _ g) c = elem c g
+alreadyGuessed (Puzzle _ _ g _) c = elem c g
 
 
 renderPuzzleChar :: Maybe Char -> Char
@@ -64,9 +64,9 @@ renderPuzzleChar Nothing = '_'
 renderPuzzleChar (Just c) = c
 
 fillInCharacter :: Puzzle -> Char -> Puzzle
-fillInCharacter (Puzzle word filledInSoFar s) c =
+fillInCharacter (Puzzle word filledInSoFar s e) c =
 
-    Puzzle word newFilledInSoFar (c : s)
+    Puzzle word newFilledInSoFar (c : s) newErrors
 
     where zipper guessed wordChar guessChar =
 
@@ -75,6 +75,7 @@ fillInCharacter (Puzzle word filledInSoFar s) c =
             else guessChar
 
           newFilledInSoFar = zipWith (zipper c) word filledInSoFar
+          newErrors = if newFilledInSoFar == filledInSoFar && (not (elem c s)) then (c:e) else e 
 
 handleGuess :: Puzzle -> Char -> IO Puzzle
 handleGuess puzzle guess = do
@@ -96,8 +97,8 @@ handleGuess puzzle guess = do
               return (fillInCharacter puzzle guess)
 
 gameOver :: Puzzle -> IO ()
-gameOver (Puzzle wordToGuess _ guessed) =
-      if (length guessed) > 7 then
+gameOver (Puzzle wordToGuess _ guessed e) =
+      if (length e) > 7 then
             do  putStrLn "You lose!"
                 putStrLn $ "The word was: " ++ wordToGuess
                 exitSuccess
@@ -105,7 +106,7 @@ gameOver (Puzzle wordToGuess _ guessed) =
 
 
 gameWin :: Puzzle -> IO ()
-gameWin (Puzzle _ filledInSoFar _) =
+gameWin (Puzzle _ filledInSoFar _ _) =
   if all isJust filledInSoFar then
     do  putStrLn "You win!"
         exitSuccess
