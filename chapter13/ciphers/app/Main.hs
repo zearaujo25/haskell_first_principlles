@@ -1,6 +1,12 @@
 module Main where
 
-import Lib
+import VigenereCipher
+import CeasarCipher
 
 main :: IO ()
-main = someFunc
+main = do 
+    putStrLn "Type the word to be ciphered"
+    word <- getLine
+    putStr "Type number key: "
+    key <- getLine
+    putStrLn (ceasarCipher word (read key :: Int))

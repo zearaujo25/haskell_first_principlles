@@ -19,17 +19,11 @@ license-file:   LICENSE
 build-type:     Simple
 extra-source-files:
     README.md
-    ChangeLog.md
-
-source-repository head
-  type: git
-  location: https://github.com/githubuser/ciphers
 
 library
   exposed-modules:
-      Lib
-  other-modules:
-      Paths_ciphers
+      VigenereCipher
+    , CeasarCipher
   hs-source-dirs:
       src
   build-depends:
@@ -38,23 +32,8 @@ library
 
 executable ciphers-exe
   main-is: Main.hs
-  other-modules:
-      Paths_ciphers
   hs-source-dirs:
       app
-  ghc-options: -threaded -rtsopts -with-rtsopts=-N
-  build-depends:
-      base >=4.7 && <5
-    , ciphers
-  default-language: Haskell2010
-
-test-suite ciphers-test
-  type: exitcode-stdio-1.0
-  main-is: Spec.hs
-  other-modules:
-      Paths_ciphers
-  hs-source-dirs:
-      test
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
