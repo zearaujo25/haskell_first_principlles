@@ -76,6 +76,9 @@ genFool = oneof [return Fulse,return Frue]
 genFreqFool :: Gen Fool
 genFreqFool = frequency [(2,return Fulse),(1,return Frue)]
 
+instance Arbitrary Fool where
+arbitrary = genFool
+
 main :: IO ()
 main = hspec $ do 
     describe "TestsQuickCheck" $ do
@@ -136,6 +139,9 @@ main = hspec $ do
 
         it "Sort property idempotency" $ do
             property $ \x ->  sortProperty  (x::String)
+
+        it "Fool test" $ do
+            property $ \x ->  (True) || (==) Fulse  (x::Fool)
 
 
 

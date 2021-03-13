@@ -1,0 +1,50 @@
+name:                hangman
+version:             0.1.0.0
+synopsis:            Playing hangman
+-- description:
+homepage:            Jose
+license:             BSD3
+license-file:        LICENSE
+author:              Jose
+maintainer:          jose@jose.jose
+copyright:           2021 Author name here
+category:            Game
+build-type:          Simple
+cabal-version:       >=1.10
+extra-source-files:  data/dict.txt
+
+executable hangman
+  hs-source-dirs:      app
+  main-is:             Main.hs
+  default-language:    Haskell2010
+  build-depends:       base >= 4.7 && < 5
+                     , split
+                     , hangman
+library
+  exposed-modules:
+      Hangman
+  hs-source-dirs:
+      src
+  build-depends:
+      base >=4.7 && <5
+    , containers
+    , QuickCheck
+    , random
+  ghc-options:
+      -Wall -fwarn-tabs
+  default-language: Haskell2010
+
+test-suite tests
+  type: exitcode-stdio-1.0
+  main-is: tests.hs
+  hs-source-dirs:
+      test
+  ghc-options: -Wall -fno-warn-orphans
+  build-depends:
+      base >=4.7 && <5
+    , containers
+    , QuickCheck
+    , hspec
+    , hangman
+
+  default-language: Haskell2010
