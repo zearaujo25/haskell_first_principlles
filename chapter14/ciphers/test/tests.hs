@@ -5,6 +5,7 @@ import CeasarCipher
 
 main :: IO ()
 main = hspec $ do
-    describe "fillInCharacter" $ do
-        it "error guess should be in error" $ do
-            property $ \x -> x + 1 > (x :: Int)
+    let testKey = 543
+    describe "Reversable property" $ do
+        it "Cipher should be reversable property" $ do
+            property $ \x -> (((flip ceasarDecipher) testKey).((flip ceasarCipher) testKey)$x) == (x :: String)
