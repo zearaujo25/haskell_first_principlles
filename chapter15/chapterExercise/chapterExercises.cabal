@@ -10,7 +10,7 @@ cabal-version:      >=1.10
 
 library
     exposed-modules:        
-         ChapterExercises           
+         SemiGroupExercises
       ,  SemiGroupProps
     ghc-options:            -Wall -fwarn-tabs
     build-depends:          base >=4.7 && <5
@@ -19,9 +19,9 @@ library
     hs-source-dirs:         src
     default-language:       Haskell2010
 
-test-suite tests
+test-suite testsSemiGroup
   type: exitcode-stdio-1.0
-  main-is: test.hs
+  main-is: testSemiGroup.hs
   hs-source-dirs:
       test
   ghc-options: -Wall -fno-warn-orphans

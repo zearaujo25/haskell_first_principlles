@@ -1,5 +1,5 @@
-module ChapterExercises where
-import Test.QuickCheck
+module SemiGroupExercises where
+import Test.QuickCheck hiding (Failure,Success)
 
 data Trivial = Trivial deriving (Eq, Show)
 
@@ -106,7 +106,37 @@ orGen :: (Arbitrary a,Arbitrary b) => Gen (Or a b)
 orGen = do 
     a <- arbitrary
     b <- arbitrary
-    oneof [return$ (Fst a), return$(Fst b)]
+    oneof [return$ (Fst a), return$(Snd b)]
 
 instance (Arbitrary a,Arbitrary b) => Arbitrary (Or a b) where
     arbitrary =  orGen
+
+newtype Combine a b = Combine { unCombine :: (a -> b) }
+
+instance (Semigroup b) => Semigroup (Combine a b) where
+    Combine{unCombine=f} <> Combine{unCombine=g} = Combine$ \n -> (f n) <> (g n) 
+
+instance Show (Combine a b) where
+  show _ = "Combine a b"
+
+instance (CoArbitrary a, Arbitrary b) => Arbitrary (Combine a b) where
+    arbitrary = do
+        f <- arbitrary
+        return (Combine f)
+
+data Validation a b = Failure a | Success b deriving (Eq, Show)
+
+instance Semigroup a => Semigroup (Validation a b) where
+   (Success a) <> _ = Success a
+   _           <> (Success a) =  Success a
+   (Failure a) <> (Failure b) = Failure(a<>b)
+
+
+valGen :: (Arbitrary a,Arbitrary b) => Gen (Validation a b)  
+valGen = do 
+    a <- arbitrary
+    b <- arbitrary
+    oneof [return$ (Failure a), return$(Success b)]
+
+instance (Arbitrary a,Arbitrary b) => Arbitrary (Validation a b) where
+    arbitrary =  valGen

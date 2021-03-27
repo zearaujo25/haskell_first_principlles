@@ -1,7 +1,7 @@
 module Main where
 import Test.Hspec
 import Test.QuickCheck
-import ChapterExercises
+import SemiGroupExercises
 import SemiGroupProps
 
 type TrivialMappend = Trivial -> 
@@ -36,6 +36,16 @@ type OrMappend =  Or String String ->
                   Or String String-> 
                   Or String String-> Bool
 
+type CombineMappend = String->
+                      Combine String String -> 
+                      Combine String String -> 
+                      Combine String String -> Bool
+
+type ValidationMappend =  Validation String String -> 
+                          Validation String String-> 
+                          Validation String String-> Bool
+
+
 main :: IO ()
 main = hspec $ do
     describe "Testing Associativity" $ do
@@ -55,3 +65,5 @@ main = hspec $ do
             property $ (semiGroupAssoc :: BoolDisjMappend)   
         it "Or should hold associativity" $ do
             property $ (semiGroupAssoc :: OrMappend)   
+        it "Validation should hold associativity" $ do
+            property $ (semiGroupAssoc :: ValidationMappend)   
