@@ -12,6 +12,8 @@ library
     exposed-modules:        
          SemiGroupExercises
       ,  SemiGroupProps
+      ,  MonoidExercises
+      ,  MonoidProps
     ghc-options:            -Wall -fwarn-tabs
     build-depends:          base >=4.7 && <5
                           , hspec 
@@ -22,6 +24,19 @@ library
 test-suite testsSemiGroup
   type: exitcode-stdio-1.0
   main-is: testSemiGroup.hs
+  hs-source-dirs:
+      test
+  ghc-options: -Wall -fno-warn-orphans
+  build-depends:
+      base >=4.7 && <5
+    , containers
+    , QuickCheck
+    , hspec
+    , chapterExercises
+
+test-suite testsMonoid
+  type: exitcode-stdio-1.0
+  main-is: testMonoid.hs
   hs-source-dirs:
       test
   ghc-options: -Wall -fno-warn-orphans
