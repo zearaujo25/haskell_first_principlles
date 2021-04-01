@@ -64,6 +64,8 @@ main = hspec $ do
         it "BoolDisj should hold associativity" $ do
             property $ (semiGroupAssoc :: BoolDisjMappend)   
         it "Or should hold associativity" $ do
-            property $ (semiGroupAssoc :: OrMappend)   
+            property $ (semiGroupAssoc :: OrMappend)  
+        it "Combine should hold associativity" $ do
+            property $ (combineSemigroupAssoc :: CombineMappend)   
         it "Validation should hold associativity" $ do
             property $ (semiGroupAssoc :: ValidationMappend)   
