@@ -151,7 +151,7 @@ newtype Mem s a =
     }
 
 instance (Semigroup b) => Semigroup (Mem a b) where
-    Mem {runMem=f} <> Mem {runMem=g}= Mem$ \s -> ((fst.f$s) <> (fst.g$s),s)
+    Mem {runMem=f} <> Mem {runMem=g}= Mem$ \s -> ((fst.f$s) <> (fst.g$s),snd.g.(snd).f$s)
 
 instance Monoid a => Monoid (Mem s a) where
     mempty = Mem$ \s -> (mempty,s)
@@ -160,7 +160,8 @@ instance Monoid a => Monoid (Mem s a) where
 instance Show (Mem s a) where
   show _ = "Mem a b"
 
-instance (CoArbitrary s, Arbitrary a) => Arbitrary (Mem s a) where
+instance (CoArbitrary s, Arbitrary s, Arbitrary a) => Arbitrary (Mem s a) where
     arbitrary = do
         f <- arbitrary
-        return (Mem$ \s-> ((f s), s))
+        g <- arbitrary
+        return (Mem$ \s-> ((f s), (g s)))
