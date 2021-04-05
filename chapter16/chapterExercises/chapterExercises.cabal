@@ -1,0 +1,65 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 63036af3e18bacdb3228503a4ece75c43d5febaf58334f01942370d61382d2e1
+
+name:           chapterExercises
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/githubuser/chapterExercises#readme>
+homepage:       https://github.com/githubuser/chapterExercises#readme
+bug-reports:    https://github.com/githubuser/chapterExercises/issues
+author:         Author name here
+maintainer:     example@example.com
+copyright:      2021 Author name here
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    ChangeLog.md
+
+source-repository head
+  type: git
+  location: https://github.com/githubuser/chapterExercises
+
+library
+  exposed-modules:
+      InstancesOfFunc
+  other-modules:
+      Paths_chapterExercises
+  hs-source-dirs:
+      src
+  build-depends:
+      base >=4.7 && <5
+    , QuickCheck
+  default-language: Haskell2010
+
+executable chapterExercises-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_chapterExercises
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , chapterExercises
+  default-language: Haskell2010
+
+test-suite InstancesOfFunc-test
+  type: exitcode-stdio-1.0
+  main-is: InstancesOfFuncTest.hs
+  other-modules:
+      Paths_chapterExercises
+  hs-source-dirs:
+      test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , chapterExercises
+    , hspec
+    , QuickCheck
+  default-language: Haskell2010
