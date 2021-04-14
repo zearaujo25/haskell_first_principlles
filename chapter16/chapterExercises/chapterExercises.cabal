@@ -28,6 +28,7 @@ source-repository head
 library
   exposed-modules:
       InstancesOfFunc
+    , ChapterExercises 
   other-modules:
       Paths_chapterExercises
   hs-source-dirs:
