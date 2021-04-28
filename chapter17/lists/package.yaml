@@ -1,4 +1,4 @@
-name:                lists
+name:                applicatives
 version:             0.1.0.0
 github:              "githubuser/lists"
 license:             BSD3
@@ -14,10 +14,6 @@ extra-source-files:
 # synopsis:            Short description of your package
 # category:            Web
 
-# To avoid duplicated efforts in documentation and dealing with the
-# complications of embedding Haddock markup inside cabal files, it is
-# common to point users to the README.md file.
-description:         Please see the README on GitHub at <https://github.com/githubuser/lists#readme>
 
 dependencies:
 - base >= 4.7 && < 5
@@ -26,7 +22,7 @@ library:
   source-dirs: src
 
 executables:
-  lists-exe:
+  applicatives-exe:
     main:                Main.hs
     source-dirs:         app
     ghc-options:
@@ -34,10 +30,10 @@ executables:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - lists
+    - applicatives
 
 tests:
-  lists-test:
+  applicatives-test:
     main:                Spec.hs
     source-dirs:         test
     ghc-options:
@@ -45,4 +41,4 @@ tests:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - lists
+    - applicatives
