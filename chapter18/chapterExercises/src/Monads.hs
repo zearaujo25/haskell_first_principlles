@@ -3,6 +3,7 @@ module Monads where
 import Test.QuickCheck
 import Test.QuickCheck.Checkers
 import Test.QuickCheck.Classes
+import Control.Monad (join)
 
 data Sum a b =First a| Second b deriving (Eq, Show) --just like PhhhbbtttEither
 
@@ -131,3 +132,25 @@ take' n (Cons a xs) = if n > 0 then Cons a (take' (n-1) xs) else (Cons a xs)
 
 repeat' :: a -> List a
 repeat' a = Cons a (repeat' a) 
+
+
+j :: Monad m => m (m a) -> m a
+j ms = join ms
+
+l1 :: Monad m => (a -> b) -> m a -> m b
+l1 f m = f<$>m
+
+l2 :: Monad m => (a -> b -> c) -> m a -> m b -> m c
+l2 f m1 m2 = f<$>m1<*>m2
+
+a :: Monad m => m a -> m (a -> b) -> m b
+a m mf  = mf<*>m
+
+meh :: Monad m => [a] -> (a -> m b) -> m [b]
+meh [] _ = return []
+meh (h:t) f =  (++) <$> list <*> (meh t f)
+                where 
+                    list = (:[]) <$> (f h)
+                    
+flipType :: (Monad m) => [m a] -> m [a]
+flipType xs = meh xs id
