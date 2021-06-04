@@ -219,18 +219,3 @@ instance (Arbitrary a,Arbitrary b) => Arbitrary (Bigger a b) where
 
 instance (Eq a,Eq b) => EqProp (Bigger a b) where
     (=-=) = eq
-    
-----------SkiFree---------
-data S n a = S (n a) a deriving (Eq, Show)
-
-instance ( Functor n
-        , Arbitrary (n a)
-        , Arbitrary a )
-        => Arbitrary (S n a) where
-    arbitrary = S <$> arbitrary <*> arbitrary
-instance ( Applicative n
-        , Testable (n Property)
-        , EqProp a )
-        => EqProp (S n a) where
-(S x y) =-= (S p q) = (property $ (=-=) <$> x <*> p)
-    .&. (y Test.QuickCheck.Checkers.(=-=) q)

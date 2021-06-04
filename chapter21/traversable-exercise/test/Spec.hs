@@ -4,6 +4,8 @@ import Test.QuickCheck.Classes
 import Test.Hspec
 import Test.Hspec.Checkers
 import ChapterExercises
+import SkiFree
+import Tree
 
 type SSI = (String, String, [Int])
 
@@ -31,6 +33,12 @@ bigTrigger = undefined
 
 biggerTrigger :: Bigger String SSI
 biggerTrigger = undefined
+
+skiFreeTrigger :: S [] SSI
+skiFreeTrigger = undefined
+
+treeTrigger :: Tree SSI
+treeTrigger = undefined
 
 main :: IO ()
 main = hspec $ do
@@ -66,3 +74,10 @@ main = hspec $ do
         testBatch  (traversable biggerTrigger)
         testBatch  (applicative biggerTrigger)
         testBatch  (functor biggerTrigger)
+    describe "SkiFree Traversable " $ do
+        testBatch  (traversable skiFreeTrigger)
+        testBatch  (applicative skiFreeTrigger)
+        testBatch  (functor skiFreeTrigger)
+    describe "Tree Traversable " $ do
+        testBatch  (traversable treeTrigger)
+        testBatch  (functor treeTrigger)

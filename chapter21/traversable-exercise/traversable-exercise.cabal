@@ -28,7 +28,9 @@ source-repository head
 library
   exposed-modules:
       Lib,
-      ChapterExercises
+      ChapterExercises,
+      SkiFree,
+      Tree
   other-modules:
       Paths_traversable_exercise
   hs-source-dirs:
