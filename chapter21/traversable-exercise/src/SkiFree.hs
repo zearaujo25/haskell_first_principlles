@@ -10,7 +10,7 @@ instance ( Functor n
         , Arbitrary a )
         => Arbitrary (S n a) where
     arbitrary = S <$> arbitrary <*> arbitrary
---The isntance from the book is broke, switched to this one 
+--The isntance from the book is broke, switched to this one  
 instance (Eq (n a), Eq a) => EqProp (S n a) where (=-=) = eq
 
 instance (Functor n) => Functor (S n) where
