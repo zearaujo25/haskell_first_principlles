@@ -64,4 +64,4 @@ main = do
     print $ sequenceA [(>3), (<8), even] 7
     print $ foldr (&&) True $ sequA 6
     print $ sequA $ fromMaybe 0 s' 
-    print $ bolt<$>ys
+    print $ bolt $ fromMaybe 0 ys
