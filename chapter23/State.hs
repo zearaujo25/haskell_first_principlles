@@ -9,16 +9,27 @@ instance Functor (Moi s) where
     fmap :: (a -> b) -> Moi s a -> Moi s b
     fmap f (Moi g) = Moi$ (\(a,s)-> ((f a),s)).g    
 
+
+applicativeFunction f g s = (f' x, s)
+    where
+        (x, s') = g s
+        (f', s'') = f s
+
 instance Applicative (Moi s) where
-    pure :: a -> Moi s a
-    pure a = Moi$ \s -> (a,s)
-    (<*>) :: Moi s (a -> b) -> Moi s a -> Moi s b
-    (Moi f) <*> (Moi g) = Moi$ \s -> ( (\(a,_)-> (((fst.f$ s) a) ,s) ).g$s)
+  pure a = Moi $ \s -> (a, s)
+  Moi f <*> Moi g = Moi $ applicativeFunction f g
+
+
+monadFunction f g s = runMoi newMoi s'
+    where 
+        (a,s') = f s
+        newMoi = g a
+
 
 instance Monad (Moi s) where
     return = pure
     (>>=) :: Moi s a -> (a -> Moi s b) -> Moi s b
-    (Moi f) >>= g = Moi$ \s->  (fst (runMoi  (g.fst.f$ s) s), s)
+    (Moi f) >>= g = Moi$ monadFunction f g
 
 
 get :: Moi s s
