@@ -4,7 +4,6 @@ module Main where
 import Control.Applicative
 import Data.Ratio ((%))
 import Text.Trifecta
-import Text.Parser.Combinators (eof)
 
 
 stop :: Parser a
