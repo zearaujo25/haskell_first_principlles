@@ -70,21 +70,3 @@ parseFourDigits = do
     d3 <- digit
     d4 <- digit
     return$ (read [d1,d2,d3,d4] :: Int)
-
-
-data List a = Cons a (List a) | Empty deriving Show 
-
-fromList :: [a] -> List a 
-fromList  = foldr (\a-> \b-> Cons a b ) Empty 
-
-
-fromListReverse :: [a] -> List a 
-fromListReverse  = foldr (\a-> \b-> appendList b (Cons a Empty) ) Empty 
-
-appendList :: List a -> List a-> List a 
-appendList Empty Empty = Empty
-appendList a Empty = a
-appendList Empty b = b 
-appendList (Cons a b) c = (Cons a)$ appendList b c
-
-
