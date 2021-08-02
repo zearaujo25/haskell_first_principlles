@@ -62,10 +62,7 @@ app =get "/:key" $ do
     unprefixed <- param "key"
     prefix <- getPrefix
     let key' = mappend prefix unprefixed
-    counts <- getHits 
-
     newInteger <- getAndUpdateHits key'
-
     html $mconcat [ "<h1>Success! Count was: "
                     , TL.pack $ show newInteger
                     , "</h1>"
